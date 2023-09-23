@@ -41,11 +41,17 @@ class _SignupPageState extends State<SignupPage> {
       ));
       Navigator.of(context).pushReplacementNamed('/login');
     } on AuthException catch (error) {
+      setState(() {
+        isLoading = false;
+      });
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(error.toString()),
       ));
       print(123);
     } catch (error) {
+      setState(() {
+        isLoading = false;
+      });
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(error.toString()),
       ));

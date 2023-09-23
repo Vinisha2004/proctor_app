@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:foss/pages/basic_info.dart';
 import 'package:foss/pages/home_page.dart';
 import 'package:foss/pages/login_page.dart';
+import 'package:foss/pages/my_profile.dart';
 import 'package:foss/pages/signup_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:foss/db.dart';
+import 'package:foss/pages/message_page.dart';
 
 void main() async {
   await Supabase.initialize(
@@ -33,6 +35,8 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => const SignupPage(),
         '/home': (context) => const HomePage(),
         '/basicinfo': (context) => const RegisterPage(),
+        '/message': (context) => const ComplaintForm(),
+        '/profile': (context) => const MyProfileScreen(),
       },
     );
   }

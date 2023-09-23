@@ -24,6 +24,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+    Map<String, dynamic> data;
     _authsubscription = sb.auth.onAuthStateChange.listen((event) async {
       final session = event.session;
       if (session != null) {
@@ -31,9 +32,19 @@ class _LoginPageState extends State<LoginPage> {
           isLoading = false;
           isCompleted = true;
         });
-        if (await db.fetchStudentData()) {
-          Navigator.pushNamed(context, '/home',
-              arguments: args(db.fname, db.yos, db.regNo, db.rollNo));
+        data = await db.fetchStudentData();
+        if (data.isNotEmpty) {
+          if (context.mounted) {
+            Navigator.pushNamed(context, '/home',
+                arguments: args(
+                    data['fname'],
+                    data['lname'],
+                    data['yos'],
+                    data['regNo'],
+                    data['rollNo'],
+                    data['email'],
+                    data['phone']));
+          }
         } else {
           Navigator.of(context).pushReplacementNamed('/basicinfo');
         }

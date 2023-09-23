@@ -1,3 +1,4 @@
+import 'package:foss/args.dart';
 import 'package:flutter/material.dart';
 
 class MyProfileScreen extends StatelessWidget {
@@ -8,6 +9,8 @@ class MyProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final args a = ModalRoute.of(context)!.settings.arguments as args;
+    print(a.findClass());
     return Scaffold(
       //app bar theme for tablet
       appBar: AppBar(
@@ -22,10 +25,8 @@ class MyProfileScreen extends StatelessWidget {
               child: Row(
                 children: [
                   Icon(Icons.report_gmailerrorred_outlined),
-                  kHalfWidthSizedBox,
-                  Text(
-                    'Report',
-                    style: Theme.of(context).textTheme.subtitle2,
+                  const SizedBox(
+                    height: 10,
                   ),
                 ],
               ),
@@ -36,10 +37,17 @@ class MyProfileScreen extends StatelessWidget {
       body: Container(
         color: Colors.white,
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              width: 100,
-              height: 15,
+              margin: EdgeInsets.only(
+                top: 20,
+                bottom: 20,
+                left: 35,
+                right: 35,
+              ),
+              height: MediaQuery.of(context).size.height / 8,
               decoration: BoxDecoration(
                 color: const Color(0xd20c399c),
                 borderRadius: BorderRadius.circular(18),
@@ -48,23 +56,34 @@ class MyProfileScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    radius:
-                        SizerUtil.deviceType == DeviceType.tablet ? 12.w : 13.w,
-                    backgroundColor: kSecondaryColor,
-                    backgroundImage:
-                        AssetImage('assets/images/student_profile.jpeg'),
+                    radius: 30.0,
+                    backgroundColor: Colors.white,
+                    backgroundImage: AssetImage('images/graduated.png'),
                   ),
-                  kWidthSizedBox,
+                  const SizedBox(
+                    width: 30,
+                  ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Aisha Mirza',
-                        style: Theme.of(context).textTheme.subtitle1,
+                        '${a.fname} ${a.lname}',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                      Text('Class X-II A | Roll no: 12',
-                          style: Theme.of(context).textTheme.subtitle2),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        '${a.findClass()} | ${a.rollNo}',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ],
                   )
                 ],
@@ -76,15 +95,15 @@ class MyProfileScreen extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                ProfileDetailRow(
-                    title: 'Registration Number', value: '2020-ASDF-2021'),
-                ProfileDetailRow(title: 'Academic Year', value: '2020-2021'),
+                ProfileDetailRow(title: 'Registration Number', value: a.regNo),
+                ProfileDetailRow(title: 'Academic Year', value: a.yos),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                ProfileDetailRow(title: 'Admission Class', value: 'X-II'),
+                ProfileDetailRow(
+                    title: 'Admission year', value: a.yos.substring(0, 5)),
                 ProfileDetailRow(title: 'Admission Number', value: '000126'),
               ],
             ),
@@ -101,7 +120,7 @@ class MyProfileScreen extends StatelessWidget {
             ),
             ProfileDetailColumn(
               title: 'Email',
-              value: 'aisha12@gmail.com',
+              value: a.email,
             ),
             ProfileDetailColumn(
               title: 'Father Name',
@@ -113,7 +132,7 @@ class MyProfileScreen extends StatelessWidget {
             ),
             ProfileDetailColumn(
               title: 'Phone Number',
-              value: '+923066666666',
+              value: "+91${a.phone.toString()}",
             ),
           ],
         ),
@@ -130,9 +149,10 @@ class ProfileDetailRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 40.w,
+      //color: Colors.amberAccent,
+      width: MediaQuery.of(context).size.width / 2.5,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Column(
@@ -140,27 +160,36 @@ class ProfileDetailRow extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                      color: kTextBlackColor,
-                      fontSize: SizerUtil.deviceType == DeviceType.tablet
-                          ? 7.sp
-                          : 9.sp,
-                    ),
-              ),
-              kHalfSizedBox,
-              Text(value, style: Theme.of(context).textTheme.caption),
-              kHalfSizedBox,
-              SizedBox(
-                width: 35.w,
-                child: Divider(
-                  thickness: 1.0,
+                style: TextStyle(
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  Text(
+                    value,
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Icon(
+                    Icons.lock_outline,
+                    size: 10,
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              SizedBox(width: 5),
             ],
-          ),
-          Icon(
-            Icons.lock_outline,
-            size: 10.sp,
           ),
         ],
       ),
@@ -177,8 +206,15 @@ class ProfileDetailColumn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.only(
+        left: 15,
+        right: 15,
+      ),
+      margin: EdgeInsets.only(left: 10, right: 10),
+      //color: Colors.yellow,
+      width: MediaQuery.of(context).size.width,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Column(
@@ -186,27 +222,41 @@ class ProfileDetailColumn extends StatelessWidget {
             children: [
               Text(
                 title,
-                style: Theme.of(context).textTheme.subtitle1!.copyWith(
-                      color: kTextBlackColor,
-                      fontSize: SizerUtil.deviceType == DeviceType.tablet
-                          ? 7.sp
-                          : 11.sp,
-                    ),
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              kHalfSizedBox,
-              Text(value, style: Theme.of(context).textTheme.caption),
-              kHalfSizedBox,
+              const SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  Text(
+                    value,
+                    style: TextStyle(
+                      fontSize: 12,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 15,
+                  ),
+                  Icon(
+                    Icons.lock_outline,
+                    size: 10,
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 5,
+              ),
               SizedBox(
-                width: 92.w,
+                width: MediaQuery.of(context).size.width / 2.5,
                 child: Divider(
                   thickness: 1.0,
                 ),
               )
             ],
-          ),
-          Icon(
-            Icons.lock_outline,
-            size: 10.sp,
           ),
         ],
       ),

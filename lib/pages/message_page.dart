@@ -12,6 +12,7 @@ class Complaint {
 }
 
 class ComplaintForm extends StatefulWidget {
+  const ComplaintForm({super.key});
   @override
   _ComplaintFormState createState() => _ComplaintFormState();
 }
@@ -23,63 +24,66 @@ class _ComplaintFormState extends State<ComplaintForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: <Widget>[
-          TextFormField(
-            controller: _titleController,
-            decoration: InputDecoration(labelText: 'Title'),
-            validator: (String? value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter a title';
-              }
-              return null;
-            },
-          ),
-          TextFormField(
-            controller: _descriptionController,
-            decoration: InputDecoration(labelText: 'raise your complaint'),
-            validator: (String? value) {
-              if (value == null || value.isEmpty) {
-                return 'Please enter a description';
-              }
-              return null;
-            },
-          ),
-          SizedBox(height: 20.0),
-          ElevatedButton(
-            onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                Complaint complaint = Complaint(
-                  _titleController.text,
-                  _descriptionController.text,
-                );
+    return Scaffold(
+      appBar: AppBar(),
+      body: Form(
+        key: _formKey,
+        child: Column(
+          children: <Widget>[
+            TextFormField(
+              controller: _titleController,
+              decoration: InputDecoration(labelText: 'Title'),
+              validator: (String? value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a title';
+                }
+                return null;
+              },
+            ),
+            TextFormField(
+              controller: _descriptionController,
+              decoration: InputDecoration(labelText: 'raise your complaint'),
+              validator: (String? value) {
+                if (value == null || value.isEmpty) {
+                  return 'Please enter a description';
+                }
+                return null;
+              },
+            ),
+            SizedBox(height: 20.0),
+            ElevatedButton(
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  Complaint complaint = Complaint(
+                    _titleController.text,
+                    _descriptionController.text,
+                  );
 
-                // TODO: Send the complaint to your backend or perform necessary actions
+                  // TODO: Send the complaint to your backend or perform necessary actions
 
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: Text('Complaint Submitted'),
-                      content: Text('Thank you for your feedback!'),
-                      actions: <Widget>[
-                        TextButton(
-                          child: Text('OK'),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                      ],
-                    );
-                  },
-                );
-              }
-            },
-            child: Text('Submit Complaint'),
-          ),
-        ],
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Complaint Submitted'),
+                        content: Text('Thank you for your feedback!'),
+                        actions: <Widget>[
+                          TextButton(
+                            child: Text('OK'),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                }
+              },
+              child: Text('Submit Complaint'),
+            ),
+          ],
+        ),
       ),
     );
   }

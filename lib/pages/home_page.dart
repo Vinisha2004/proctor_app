@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:foss/main.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'dart:async';
-import 'package:foss/db.dart';
 import 'package:foss/args.dart';
+import 'package:foss/pages/my_profile.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -113,7 +113,9 @@ class _HomePageState extends State<HomePage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        sb.auth.signOut();
+                        Navigator.pushNamed(context, '/profile',
+                            arguments: args(a.fname, a.lname, a.yos, a.regNo,
+                                a.rollNo, a.email, a.phone));
                         print('hello');
                       },
                       child: const CircleAvatar(
@@ -131,26 +133,31 @@ class _HomePageState extends State<HomePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width / 2.5,
-                      height: MediaQuery.of(context).size.width / 8,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(18),
+                    GestureDetector(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width / 2.5,
+                        height: MediaQuery.of(context).size.width / 8,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(18),
+                        ),
+                        child: const Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Raise a query',
+                              style: TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400,
+                                color: Colors.black,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                      child: const Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Raise a query',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: Colors.black,
-                            ),
-                          )
-                        ],
-                      ),
+                      onTap: () {
+                        Navigator.of(context).pushReplacementNamed('/message');
+                      },
                     ),
                     const SizedBox(
                       width: 20,
@@ -211,11 +218,18 @@ class _HomePageState extends State<HomePage> {
                           child: const Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              Icon(
+                                Icons.meeting_room_outlined,
+                                size: 35,
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
                               Text(
-                                'Timetable',
+                                'Proctor Meet',
                                 style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
                                   color: Colors.black,
                                 ),
                               ),
@@ -235,11 +249,18 @@ class _HomePageState extends State<HomePage> {
                           child: const Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              Icon(
+                                Icons.calendar_month_outlined,
+                                size: 35,
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
                               Text(
                                 'Holidays',
                                 style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
                                   color: Colors.black,
                                 ),
                               ),
@@ -264,11 +285,18 @@ class _HomePageState extends State<HomePage> {
                           child: const Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              Icon(
+                                Icons.assessment_outlined,
+                                size: 35,
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
                               Text(
                                 'Assessments',
                                 style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
                                   color: Colors.black,
                                 ),
                               ),
@@ -288,11 +316,18 @@ class _HomePageState extends State<HomePage> {
                           child: const Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              Icon(
+                                Icons.work_history_outlined,
+                                size: 35,
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
                               Text(
                                 'Projects',
                                 style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
                                   color: Colors.black,
                                 ),
                               ),
@@ -317,11 +352,18 @@ class _HomePageState extends State<HomePage> {
                           child: const Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              Icon(
+                                Icons.read_more_outlined,
+                                size: 35,
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
                               Text(
-                                'Profile info',
+                                'Hall allotment',
                                 style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
                                   color: Colors.black,
                                 ),
                               ),
@@ -341,11 +383,18 @@ class _HomePageState extends State<HomePage> {
                           child: const Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
+                              Icon(
+                                Icons.timer_outlined,
+                                size: 35,
+                              ),
+                              SizedBox(
+                                height: 15,
+                              ),
                               Text(
-                                'Proctor',
+                                'Timetable',
                                 style: TextStyle(
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w400,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w600,
                                   color: Colors.black,
                                 ),
                               ),
